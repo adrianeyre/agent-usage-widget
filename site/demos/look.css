@@ -1,0 +1,116 @@
+/* Agent Usage's look for every demo (the Stageshow kit's tokens, references/looks.md
+   in the skill). The app is native macOS: system greys, SF Pro (here Inter, the
+   page's face), the system green, orange and red for the pace bands, and the
+   accent blue only where macOS itself uses it (the menu's hover highlight). */
+
+.au .ss-stage {
+  --ss-font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ss-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ss-canvas: #f1f2f4;
+  --ss-surface: #ffffff;
+  --ss-chrome: #ececee;
+  --ss-raised: #ffffff;
+  --ss-well: #e6e8ec;
+
+  --ss-text-strong: #111318;
+  --ss-text: #5d6270;
+  --ss-text-faint: #868b97;
+  --ss-icon: #5d6270;
+  --ss-icon-faint: #b6bac3;
+  --ss-line: rgb(15 23 42 / 10%);
+  --ss-line-faint: rgb(15 23 42 / 6%);
+  --ss-ink-1: rgb(15 23 42 / 4%);
+  --ss-ink-2: rgb(15 23 42 / 6%);
+  --ss-ink-3: rgb(15 23 42 / 9%);
+  --ss-ink-4: rgb(15 23 42 / 12%);
+  --ss-ink-5: rgb(15 23 42 / 17%);
+
+  --ss-accent: #0a7aff;
+  --ss-accent-2: #0a7aff;
+  --ss-accent-soft: #e5f0ff;
+  --ss-accent-text: #0058c2;
+
+  --ss-success: #28b446;
+  --ss-success-soft: #dff5e4;
+  --ss-success-text: #157a2c;
+  --ss-warning: #f08a00;
+  --ss-warning-soft: #fdecd4;
+  --ss-warning-text: #9a5400;
+  --ss-danger: #f03e3e;
+  --ss-danger-soft: #fde1e1;
+  --ss-danger-text: #b42323;
+
+  --ss-radius-sm: 6px;
+  --ss-radius-md: 8px;
+  --ss-radius-lg: 12px;
+  --ss-radius-window: 12px;
+
+  --ss-shadow-hero: 0 0 0 0.5px rgb(15 23 42 / 18%), 0 24px 48px -14px rgb(15 23 42 / 26%), 0 10px 22px -12px rgb(15 23 42 / 18%);
+  --ss-shadow-satellite: 0 0 0 0.5px rgb(15 23 42 / 16%), 0 14px 30px -10px rgb(15 23 42 / 24%);
+  --ss-shadow-card: 0 0 0 0.5px rgb(15 23 42 / 12%), 0 1px 2px rgb(15 23 42 / 5%);
+
+  /* The app's own roles, beyond the kit's */
+  --au-panel: #f6f6f7;
+  --au-card: rgb(15 23 42 / 4.5%);
+  --au-card-hover: rgb(15 23 42 / 8%);
+  --au-tile: rgb(15 23 42 / 8%);
+  --au-track: rgb(15 23 42 / 10%);
+  --au-marker: #111318;
+  --au-halo: #ffffff;
+  --au-menubar: rgb(255 255 255 / 70%);
+}
+
+.au .ss-stage[data-theme="dark"] {
+  --ss-canvas: #16181d;
+  --ss-surface: #1f2127;
+  --ss-chrome: #26282e;
+  --ss-raised: #2a2d34;
+  --ss-well: #121418;
+
+  --ss-text-strong: #f3f4f6;
+  --ss-text: #a6abb6;
+  --ss-text-faint: #7d828d;
+  --ss-icon: #a6abb6;
+  --ss-icon-faint: #5c616c;
+  --ss-line: rgb(255 255 255 / 11%);
+  --ss-line-faint: rgb(255 255 255 / 6%);
+  --ss-ink-1: rgb(255 255 255 / 4%);
+  --ss-ink-2: rgb(255 255 255 / 6%);
+  --ss-ink-3: rgb(255 255 255 / 9%);
+  --ss-ink-4: rgb(255 255 255 / 12%);
+  --ss-ink-5: rgb(255 255 255 / 17%);
+
+  --ss-accent: #0a84ff;
+  --ss-accent-2: #0a84ff;
+  --ss-accent-soft: rgb(10 132 255 / 18%);
+  --ss-accent-text: #6cb3ff;
+
+  --ss-success: #30d158;
+  --ss-success-soft: rgb(48 209 88 / 16%);
+  --ss-success-text: #5fe07f;
+  --ss-warning: #ff9f0a;
+  --ss-warning-soft: rgb(255 159 10 / 16%);
+  --ss-warning-text: #ffb340;
+  --ss-danger: #ff453a;
+  --ss-danger-soft: rgb(255 69 58 / 16%);
+  --ss-danger-text: #ff7a71;
+
+  --ss-shadow-hero: 0 0 0 0.5px rgb(255 255 255 / 14%), 0 24px 48px -14px rgb(0 0 0 / 60%);
+  --ss-shadow-satellite: 0 0 0 0.5px rgb(255 255 255 / 14%), 0 14px 30px -10px rgb(0 0 0 / 55%);
+  --ss-shadow-card: 0 0 0 0.5px rgb(255 255 255 / 12%);
+
+  --au-panel: #232529;
+  --au-card: rgb(255 255 255 / 5%);
+  --au-card-hover: rgb(255 255 255 / 9%);
+  --au-tile: rgb(255 255 255 / 9%);
+  --au-track: rgb(255 255 255 / 12%);
+  --au-marker: #f3f4f6;
+  --au-halo: #232529;
+  --au-menubar: rgb(30 32 38 / 72%);
+}
+
+/* The stage sits on the page's own ground: no plate. */
+.au .ss-stage {
+  background: transparent;
+}

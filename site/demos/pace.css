@@ -1,0 +1,123 @@
+/* The widget at about 1.45x, a gutter in from the stage's top and sides, fading out
+   at its foot over the Weekly filler row. */
+.pace-demo {
+  & .ss-stage {
+    --pd-k: 1.45;
+    overflow: hidden;
+  }
+
+  & .ss-stage[data-layout="compact"] {
+    --pd-k: 1;
+  }
+
+  .pd-fade {
+    position: absolute;
+    inset: 16px 16px 0;
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  }
+
+  .pd-widget {
+    display: flex;
+    flex-direction: column;
+    gap: calc(10px * var(--pd-k));
+    height: calc(100% + 40px);
+    padding: calc(16px * var(--pd-k));
+    background: var(--ss-surface);
+    border-radius: calc(20px * var(--pd-k));
+    box-shadow: var(--ss-shadow-hero);
+  }
+
+  .pd-head {
+    display: flex;
+    align-items: center;
+    gap: calc(8px * var(--pd-k));
+  }
+
+  .pd-head .au-tile {
+    --au-tile-size: calc(26px * var(--pd-k)) !important;
+  }
+
+  .pd-who {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .pd-name {
+    color: var(--ss-text-strong);
+    font-size: calc(13px * var(--pd-k));
+    font-weight: 650;
+  }
+
+  .pd-sub,
+  .pd-updated {
+    color: var(--ss-text);
+    font-size: calc(11px * var(--pd-k));
+  }
+
+  .pd-limit {
+    display: flex;
+    flex-direction: column;
+    gap: calc(3px * var(--pd-k));
+  }
+
+  .pd-limit__top {
+    display: flex;
+    align-items: baseline;
+    gap: calc(6px * var(--pd-k));
+  }
+
+  .pd-limit__name {
+    color: var(--ss-text);
+    font-size: calc(12px * var(--pd-k));
+    font-weight: 500;
+  }
+
+  .pd-limit__figure {
+    color: var(--ss-text-strong);
+    font-size: calc(15px * var(--pd-k));
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pd-limit__reset {
+    margin-left: auto;
+    color: var(--ss-text);
+    font-size: calc(11px * var(--pd-k));
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pd-limit__bar {
+    display: flex;
+    align-items: center;
+    gap: calc(8px * var(--pd-k));
+  }
+
+  .pd-limit__bar .au-bar {
+    --au-bar-h: calc(10px * var(--pd-k)) !important;
+  }
+
+  .pd-pace {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    width: calc(72px * var(--pd-k));
+    color: var(--ss-text);
+    font-size: calc(11px * var(--pd-k));
+    font-weight: 550;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pd-filler-bar {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ss-stage[data-layout="compact"] .pd-updated {
+    display: none;
+  }
+}

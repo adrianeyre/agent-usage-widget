@@ -1,0 +1,19 @@
+{
+  // Type-checks the product demos and the vendored Stageshow kit they're built on
+  // (../stageshow/), which Vite bundles. The kit is kept as published, written to
+  // plain `strict`, so that's the bar here.
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2024", "dom", "dom.iterable"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "types": ["vite/client"],
+    "noEmit": true
+  },
+  "include": [".", "../stageshow/kit"]
+}

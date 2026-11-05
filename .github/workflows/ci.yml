@@ -1,0 +1,73 @@
+# Builds both targets and runs the unit tests on every pull request (B1, B2).
+# When the signing secrets exist, it also signs a Release build with the self-signed
+# certificate (B6) and uploads it, so the build can be tried without Xcode.
+name: CI
+
+# Also builds the website (site/) so a pull request can't break the Pages deploy.
+# Not on pushes to main: release.yml builds and tests those, and macOS minutes on a
+# private repo cost 10× Linux ones.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    # Pinned image with its stable Xcode 26, not macos-latest (B1).
+    runs-on: macos-26
+    env:
+      HAS_SIGNING_SECRETS: ${{ secrets.SIGNING_CERTIFICATE_P12_BASE64 != '' && secrets.SIGNING_CERTIFICATE_PASSWORD != '' }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Show toolchain
+        run: xcodebuild -version && swift --version
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Build and test
+        run: scripts/test.sh
+
+      - name: Import signing certificate
+        if: env.HAS_SIGNING_SECRETS == 'true'
+        env:
+          SIGNING_CERTIFICATE_P12_BASE64: ${{ secrets.SIGNING_CERTIFICATE_P12_BASE64 }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+        run: scripts/ci/import-certificate.sh
+      - name: Build, sign and package
+        if: env.HAS_SIGNING_SECRETS == 'true'
+        run: scripts/build-release.sh "0.0.0-pr.${{ github.event.pull_request.number || github.run_number }}"
+      - name: Upload signed build
+        if: env.HAS_SIGNING_SECRETS == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AgentUsage-signed-build
+          path: dist/
+          retention-days: 14
+      - name: Note missing signing secrets
+        if: env.HAS_SIGNING_SECRETS != 'true'
+        run: echo "::notice::Signing skipped because the SIGNING_CERTIFICATE_* secrets aren't set (#29)."
+      - name: Delete signing keychain
+        if: always()
+        run: scripts/ci/delete-keychain.sh
+
+  site:
+    name: Build the website
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 26
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Type-check
+        run: pnpm site:typecheck
+      - name: Build
+        run: pnpm site:build

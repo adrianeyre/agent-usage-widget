@@ -1,0 +1,36 @@
+{
+  "name": "agent-usage-widget",
+  "version": "0.0.0-development",
+  "private": true,
+  "description": "A macOS widget that shows AI subscription usage limits with a pace marker",
+  "type": "module",
+  "license": "ISC",
+  "scripts": {
+    "prepare": "husky",
+    "commitlint": "commitlint --edit",
+    "site:build": "node site/build.ts",
+    "site:dev": "node site/build.ts --dev",
+    "site:preview": "node site/build.ts --preview",
+    "site:typecheck": "pnpm --filter @agent-usage/site typecheck"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=26",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.16.1",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.16.1",
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@semantic-release/exec": "^7.1.0",
+    "husky": "^9.1.7",
+    "semantic-release": "^25.0.9"
+  }
+}

@@ -1,0 +1,59 @@
+# On every push to main: build and test, then let semantic-release decide the version
+# from Conventional Commits and publish a signed, checksummed release (B2, B3, B5–B8).
+# Release notes go on the GitHub release only; nothing is committed back to main.
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 26
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Show toolchain
+        run: xcodebuild -version && swift --version
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      # Publish only if everything passes (B2).
+      - name: Build and test
+        run: scripts/test.sh
+
+      - name: Import signing certificate
+        env:
+          SIGNING_CERTIFICATE_P12_BASE64: ${{ secrets.SIGNING_CERTIFICATE_P12_BASE64 }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+        run: scripts/ci/import-certificate.sh
+
+      # The prepare step runs scripts/build-release.sh <version>, which builds with
+      # MARKETING_VERSION=<version> and CURRENT_PROJECT_VERSION=$GITHUB_RUN_NUMBER,
+      # signs both targets and writes the zip and checksum that are attached.
+      - name: semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm exec semantic-release
+
+      - name: Delete signing keychain
+        if: always()
+        run: scripts/ci/delete-keychain.sh

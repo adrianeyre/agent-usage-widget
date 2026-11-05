@@ -1,0 +1,5 @@
+# The root holds the repo's tooling (commitlint, husky, semantic-release); site/ is
+# the project website, a package of its own so its React and Vite dependencies stay
+# out of the root.
+packages:
+  - site

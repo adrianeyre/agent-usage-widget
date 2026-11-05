@@ -1,0 +1,283 @@
+/* The hero: the menu bar runs off both sides of the stage, and the dropdown hangs
+   from the gauge under it, on the page's own ground, as macOS draws a
+   MenuBarExtra window. */
+.hero-menu {
+  & .ss-stage {
+    overflow: hidden;
+  }
+
+  .hm-menubar {
+    position: absolute;
+    inset: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding: 0 14px;
+    background: var(--au-menubar);
+    border-bottom: 0.5px solid var(--ss-line);
+    backdrop-filter: blur(12px);
+  }
+
+  .hm-menubar__left,
+  .hm-menubar__right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hm-menubar__item {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 22px;
+    color: var(--ss-text-strong);
+    border-radius: 6px;
+
+    &[data-on] {
+      background: var(--ss-ink-4);
+    }
+
+    & svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .hm-menubar__icon {
+    width: 15px;
+    height: 15px;
+    color: var(--ss-text-strong);
+  }
+
+  .hm-menubar__clock {
+    color: var(--ss-text-strong);
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .hm-panel {
+    position: absolute;
+    top: 36px;
+    right: 16px;
+    left: 16px;
+    overflow: hidden;
+    background: var(--au-panel);
+    border-radius: 12px;
+    box-shadow: var(--ss-shadow-hero);
+  }
+
+  .hm-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 19px;
+    border-bottom: 0.5px solid var(--ss-line);
+  }
+
+  .hm-app {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    color: #fff;
+    background: linear-gradient(180deg, #3a95ff, #0a72ef);
+    border-radius: 7px;
+
+    & svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .hm-head__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .hm-head__title {
+    color: var(--ss-text-strong);
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 17px;
+  }
+
+  .hm-head__sub {
+    color: var(--ss-text);
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .hm-head__spin {
+    color: var(--ss-text);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    &[data-show] {
+      opacity: 1;
+    }
+  }
+
+  .hm-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 7px;
+  }
+
+  .hm-card {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 12px;
+    background: var(--au-card);
+    border-radius: 12px;
+  }
+
+  .hm-card__head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 1px;
+  }
+
+  .hm-card__who {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .hm-card__name {
+    color: var(--ss-text-strong);
+    font-size: 13.5px;
+    font-weight: 650;
+    line-height: 16px;
+  }
+
+  .hm-card__sub {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow: hidden;
+    color: var(--ss-text);
+    font-size: 12px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .hm-chip {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px 2px 5px;
+    color: var(--ss-success-text);
+    font-size: 11px;
+    font-weight: 650;
+    background: var(--ss-success-soft);
+    border-radius: 999px;
+  }
+
+  .hm-limit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 16px;
+  }
+
+  .hm-limit__name {
+    flex: none;
+    width: 86px;
+    color: var(--ss-text);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .hm-limit__figure {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    width: 52px;
+    color: var(--ss-text-strong);
+    font-size: 12.5px;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hm-actions {
+    padding: 6px;
+    border-top: 0.5px solid var(--ss-line);
+  }
+
+  .hm-action {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    height: 26px;
+    padding: 0 9px;
+    color: var(--ss-text-strong);
+    font-size: 13px;
+    border-radius: 6px;
+    transition: background-color 0.12s ease, color 0.12s ease;
+
+    & svg {
+      width: 15px;
+      height: 15px;
+      color: var(--ss-text);
+    }
+
+    & span {
+      flex: 1;
+    }
+
+    & kbd {
+      color: var(--ss-text-faint);
+      font: 500 12px var(--ss-mono);
+    }
+
+    &[data-hover],
+    &[data-pressed] {
+      color: #fff;
+      background: var(--ss-accent);
+
+      & svg,
+      & kbd {
+        color: #fff;
+      }
+    }
+  }
+
+  .hm-action-rule {
+    height: 0.5px;
+    margin: 4px 9px;
+    background: var(--ss-line);
+  }
+
+  .hm-tip .ss-tooltip__label {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ss-stage[data-layout="compact"] {
+    .hm-panel {
+      right: 12px;
+      left: 12px;
+    }
+
+    .hm-limit__name {
+      width: 78px;
+    }
+
+    .hm-menubar__left :nth-child(n + 3) {
+      display: none;
+    }
+  }
+}
