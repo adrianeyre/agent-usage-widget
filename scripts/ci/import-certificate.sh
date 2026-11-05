@@ -12,8 +12,17 @@
 # that isn't in the search list. delete-keychain.sh's `security delete-keychain` takes it
 # out of the list again.
 set -euo pipefail
-: "${SIGNING_CERTIFICATE_P12_BASE64:?SIGNING_CERTIFICATE_P12_BASE64 isn't set}"
-: "${SIGNING_CERTIFICATE_PASSWORD:?SIGNING_CERTIFICATE_PASSWORD isn't set}"
+
+# No apostrophes in these messages: inside "${VAR:?...}" bash reads one as the start of a
+# single-quoted string, which garbles the error.
+missing=()
+[[ -n "${SIGNING_CERTIFICATE_P12_BASE64:-}" ]] || missing+=(SIGNING_CERTIFICATE_P12_BASE64)
+[[ -n "${SIGNING_CERTIFICATE_PASSWORD:-}" ]] || missing+=(SIGNING_CERTIFICATE_PASSWORD)
+if (( ${#missing[@]} )); then
+  msg="Missing repo secret(s): ${missing[*]}. Set them with scripts/create-certificate.sh --secrets-only (docs/guide/releasing.md)."
+  if [[ -n "${GITHUB_ACTIONS:-}" ]]; then echo "::error title=Signing secrets missing::$msg"; else echo "$msg" >&2; fi
+  exit 1
+fi
 
 TMP="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
 KEYCHAIN="${AGENT_USAGE_KEYCHAIN:-$TMP/agent-usage-signing.keychain-db}"

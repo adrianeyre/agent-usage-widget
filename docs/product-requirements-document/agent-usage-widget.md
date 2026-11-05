@@ -243,7 +243,7 @@ The pace calculation and colouring logic must be platform-independent and unit-t
 | B5 | The release version is written into `MARKETING_VERSION`, and the GitHub run number becomes `CURRENT_PROJECT_VERSION`. |
 | B6 | CI imports the self-signed certificate from two repo secrets (the `.p12` in base64, and its password) into a temporary keychain, and signs both targets with it. |
 | B7 | Each GitHub release has `AgentUsage-<version>.zip` (the `.app`, zipped with `ditto`) and a SHA-256 checksum file attached. |
-| B8 | Release notes appear only on the GitHub release. There's no `CHANGELOG.md` committed back, and no automated commits on `main`. |
+| B8 | Release notes appear on the GitHub release and are prepended to `CHANGELOG.md`, which semantic-release commits to `main` as `chore(release): <version> [skip ci]`. That's the only automated commit on `main`, and the release tag `v<version>` points at it. |
 | B9 | `scripts/install.sh` installs the latest release, or a version you name. It uses `gh release download`, which avoids the quarantine flag. It checks the SHA-256, quits the host app, replaces `/Applications/Agent Usage.app` and relaunches it. It's the only supported way to install. |
 
 The repo is `adrianeyre/agent-usage-widget`, renamed from `claude-usage-indicator` once development is complete. It's private, so GitHub bills its macOS runner minutes at 10× the Linux rate.

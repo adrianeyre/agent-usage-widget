@@ -1,6 +1,8 @@
 # On every push to main: build and test, then let semantic-release decide the version
 # from Conventional Commits and publish a signed, checksummed release (B2, B3, B5–B8).
-# Release notes go on the GitHub release only; nothing is committed back to main.
+# It prepends the notes to CHANGELOG.md and pushes that as a `chore(release): <version>
+# [skip ci]` commit, then tags it v<version> and creates the GitHub release (B8). Pushes
+# made with GITHUB_TOKEN don't start workflows, so the release commit can't loop.
 name: Release
 
 on:
@@ -24,6 +26,8 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          # semantic-release pushes the CHANGELOG commit and tag with GITHUB_TOKEN
+          # itself, so the checkout doesn't need to keep the credentials.
           persist-credentials: false
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
