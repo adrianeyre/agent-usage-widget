@@ -1,0 +1,113 @@
+# XcodeGen spec. Generate the project with `scripts/generate-project.sh` (or `xcodegen generate`).
+# AgentUsage.xcodeproj is generated and not committed.
+name: AgentUsage
+options:
+  bundleIdPrefix: com.adrianeyre
+  deploymentTarget:
+    macOS: "26.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    # Overwritten by CI from the release version and run number (B5).
+    MARKETING_VERSION: 0.0.0
+    CURRENT_PROJECT_VERSION: "0"
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
+    # Local builds are signed to run locally. CI re-signs both targets with the
+    # `Agent Usage Self-Signed` certificate (ADR-0004, scripts/sign.sh).
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: NO
+    DEAD_CODE_STRIPPING: YES
+    GENERATE_INFOPLIST_FILE: NO
+
+packages:
+  AgentUsageCore:
+    path: AgentUsageCore
+
+targets:
+  AgentUsage:
+    type: application
+    platform: macOS
+    sources:
+      - App/HostApp
+    dependencies:
+      - package: AgentUsageCore
+        product: AgentUsageHostKit
+      - target: AgentUsageWidget
+    info:
+      path: App/HostApp/Info.plist
+      properties:
+        CFBundleDisplayName: Agent Usage
+        CFBundleName: Agent Usage
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.utilities
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        # Menu-bar only: no Dock icon.
+        LSUIElement: true
+        CFBundleURLTypes:
+          - CFBundleURLName: com.adrianeyre.AgentUsage
+            CFBundleURLSchemes:
+              - agentusage
+    # Not sandboxed: it runs `claude setup-token` and holds Authorisations (ADR-0002).
+    entitlements:
+      path: App/HostApp/AgentUsage.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+    settings:
+      base:
+        PRODUCT_NAME: Agent Usage
+        PRODUCT_MODULE_NAME: AgentUsage
+        PRODUCT_BUNDLE_IDENTIFIER: com.adrianeyre.AgentUsage
+
+  AgentUsageWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - App/Widget
+    dependencies:
+      - package: AgentUsageCore
+        product: AgentUsageViews
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+    info:
+      path: App/Widget/Info.plist
+      properties:
+        CFBundleDisplayName: Agent Usage
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    # Sandboxed, reading only the host app's Application Support folder (ADR-0004).
+    entitlements:
+      path: App/Widget/AgentUsageWidget.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.temporary-exception.files.home-relative-path.read-only:
+          - /Library/Application Support/Agent Usage/
+    settings:
+      base:
+        PRODUCT_NAME: AgentUsageWidget
+        PRODUCT_BUNDLE_IDENTIFIER: com.adrianeyre.AgentUsage.Widget
+        SKIP_INSTALL: YES
+
+schemes:
+  AgentUsage:
+    build:
+      targets:
+        AgentUsage: all
+        AgentUsageWidget: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - package: AgentUsageCore/AgentUsageCoreTests
+        - package: AgentUsageCore/AgentUsageHostKitTests
+    archive:
+      config: Release

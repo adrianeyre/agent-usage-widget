@@ -1,0 +1,115 @@
+.au {
+  & .au-tile {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: var(--au-tile-size);
+    height: var(--au-tile-size);
+    color: var(--ss-icon);
+    background: var(--au-tile);
+    border-radius: calc(var(--au-tile-size) * 0.28);
+
+    & svg {
+      width: 52%;
+      height: 52%;
+    }
+  }
+
+  & .au-band-icon {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    color: #fff;
+    border-radius: 50%;
+    transition: background-color 0.35s ease;
+
+    & svg {
+      position: absolute;
+      inset: 14%;
+      width: 72%;
+      height: 72%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* One symbol in flow, so the icon has ink where it sits */
+    & svg:first-child {
+      position: relative;
+      display: block;
+      inset: auto;
+      margin: 14%;
+    }
+
+    &[data-band="green"] { background: var(--ss-success); }
+    &[data-band="amber"] { background: var(--ss-warning); }
+    &[data-band="red"] { background: var(--ss-danger); }
+    &[data-band="green"] [data-for="green"],
+    &[data-band="amber"] [data-for="amber"] {
+      opacity: 1;
+    }
+
+    /* Red is the exclamation mark itself: a white mark on the red disc */
+    & [data-for="red"] {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      fill: var(--ss-danger);
+      stroke: #fff;
+      stroke-width: 2.4;
+    }
+
+    &[data-band="red"] [data-for="red"] {
+      opacity: 1;
+    }
+  }
+
+  /* Bar about 10pt (6pt in the menu), rounded ends; marker 2pt wide, 3pt over and
+     under, in the primary label colour with a hairline halo (§6.1). */
+  & .au-bar {
+    position: relative;
+    display: block;
+    flex: 1;
+    min-width: 0;
+    height: var(--au-bar-h);
+    margin: 3px 0;
+    background: var(--au-track);
+    border-radius: 999px;
+  }
+
+  & .au-bar__fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: max(var(--au-bar-h), var(--au-used));
+    border-radius: inherit;
+    transition: width 0.7s cubic-bezier(0.3, 0.7, 0.2, 1), background-color 0.35s ease;
+  }
+
+  & .au-bar[data-empty] .au-bar__fill {
+    width: 0;
+  }
+
+  & .au-bar[data-band="green"] .au-bar__fill { background: var(--ss-success); }
+  & .au-bar[data-band="amber"] .au-bar__fill { background: var(--ss-warning); }
+  & .au-bar[data-band="red"] .au-bar__fill { background: var(--ss-danger); }
+
+  & .au-bar__marker {
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    left: var(--au-marker-at);
+    width: 2px;
+    margin-left: -1px;
+    background: var(--au-marker);
+    border-radius: 1px;
+    box-shadow: 0 0 0 1px var(--au-halo);
+    transition: left 0.9s cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    & .au-bar__fill,
+    & .au-bar__marker,
+    & .au-band-icon {
+      transition: none;
+    }
+  }
+}
