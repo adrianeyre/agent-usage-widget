@@ -11,7 +11,7 @@
 
 ## Website
 
-The project website, **[adrianeyre.github.io/agent-usage-widget](https://adrianeyre.github.io/agent-usage-widget/)**, shows what Agent Usage does, with live product demos. Its source is [`site/`](site/); the **Pages** workflow publishes it on each push to `main` that changes it ([details](docs/guide/releasing.md#the-website)).
+The project website, **[agent-usage-widget.adrianeyre.co.uk](https://agent-usage-widget.adrianeyre.co.uk/)**, shows what Agent Usage does, with live product demos. Its source is [`site/`](site/); the **Pages** workflow publishes it on each push to `main` that changes it ([details](docs/guide/releasing.md#the-website)).
 
 ## Quick start
 

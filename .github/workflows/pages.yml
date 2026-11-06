@@ -1,5 +1,6 @@
 # Builds the project website (site/) and publishes it to GitHub Pages, at
-# https://adrianeyre.github.io/agent-usage-widget/. `pnpm site:build`
+# https://agent-usage-widget.adrianeyre.co.uk/ (the custom domain set in the
+# repo's Pages settings). `pnpm site:build`
 # assembles it in site/dist/, copying in the screenshots from docs/images/,
 # so they are never kept twice in Git. Runs when anything it uses changes on
 # main, or by hand. Pages must be set to "GitHub Actions" in the repo settings.

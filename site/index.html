@@ -14,22 +14,107 @@
     <script>
       document.documentElement.classList.replace("no-js", "js");
     </script>
-    <title>Agent Usage: AI usage limits on your Mac's desktop</title>
-    <meta
-      name="description"
-      content="Agent Usage is a macOS menu-bar app and desktop widget that shows your Claude, Codex and Copilot usage limits, with a pace marker that says whether you're using them faster than their window allows."
-    />
+    <title>Agent Usage: Claude, Codex and Copilot usage limits on macOS</title>
+    <meta name="description" content="{{SITE_DESCRIPTION}}" />
+    <meta name="author" content="Adrian Eyre" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)" />
     <link rel="canonical" href="{{SITE_URL}}/" />
+    <link rel="sitemap" type="application/xml" href="sitemap.xml" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <!-- Link previews (Open Graph: Slack, iMessage, LinkedIn, Facebook, Discord, WhatsApp; and X).
+         The card is rendered by scripts/social-images.sh. Every URL here is absolute, as
+         the crawlers need. -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Agent Usage" />
-    <meta property="og:description" content="Your AI usage limits on your Mac's desktop, with a pace marker." />
+    <meta property="og:site_name" content="{{SITE_NAME}}" />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:url" content="{{SITE_URL}}/" />
-    <meta property="og:image" content="{{SITE_URL}}/images/widgets.png" />
+    <meta property="og:title" content="Agent Usage: know whether you'll run out before the reset" />
+    <meta property="og:description" content="{{SITE_DESCRIPTION}}" />
+    <meta property="og:image" content="{{SITE_URL}}/social/card.png" />
+    <meta property="og:image:secure_url" content="{{SITE_URL}}/social/card.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Agent Usage: Claude, Codex and Copilot usage limits as macOS widgets, each bar with a pace marker." />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Agent Usage: know whether you'll run out before the reset" />
+    <meta name="twitter:description" content="{{SITE_DESCRIPTION}}" />
+    <meta name="twitter:image" content="{{SITE_URL}}/social/card.png" />
+    <meta name="twitter:image:alt" content="Agent Usage: Claude, Codex and Copilot usage limits as macOS widgets, each bar with a pace marker." />
+
+    <!-- Structured data (schema.org) for search engines: the app, and the site it's on. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "{{SITE_URL}}/#website",
+            "url": "{{SITE_URL}}/",
+            "name": "{{SITE_NAME}}",
+            "description": "{{SITE_DESCRIPTION}}",
+            "inLanguage": "en-GB",
+            "publisher": { "@id": "{{SITE_URL}}/#author" }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "{{SITE_URL}}/#webpage",
+            "url": "{{SITE_URL}}/",
+            "name": "Agent Usage: Claude, Codex and Copilot usage limits on macOS",
+            "description": "{{SITE_DESCRIPTION}}",
+            "inLanguage": "en-GB",
+            "isPartOf": { "@id": "{{SITE_URL}}/#website" },
+            "about": { "@id": "{{SITE_URL}}/#app" },
+            "primaryImageOfPage": { "@type": "ImageObject", "url": "{{SITE_URL}}/social/card.png", "width": 1200, "height": 630 },
+            "dateModified": "{{BUILD_DATE}}"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "{{SITE_URL}}/#app",
+            "name": "{{SITE_NAME}}",
+            "alternateName": "Agent Usage Widget",
+            "description": "{{SITE_DESCRIPTION}}",
+            "url": "{{SITE_URL}}/",
+            "applicationCategory": "DeveloperApplication",
+            "applicationSubCategory": "Menu-bar app and desktop widget",
+            "operatingSystem": "macOS 26 or later",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+            "image": "{{SITE_URL}}/social/card.png",
+            "screenshot": [
+              "{{SITE_URL}}/images/widgets.png",
+              "{{SITE_URL}}/images/menu.png",
+              "{{SITE_URL}}/images/manage-accounts.png",
+              "{{SITE_URL}}/images/widget-states.png"
+            ],
+            "featureList": [
+              "Claude, OpenAI Codex and GitHub Copilot usage limits",
+              "A pace marker on every limit",
+              "Menu-bar dropdown and numbered desktop widgets",
+              "Any number of Accounts",
+              "Light and dark mode"
+            ],
+            "downloadUrl": "{{REPO_URL}}/releases/latest",
+            "installUrl": "{{SITE_URL}}/#install",
+            "softwareHelp": "{{DOCS_URL}}",
+            "author": { "@id": "{{SITE_URL}}/#author" },
+            "sameAs": ["{{REPO_URL}}"]
+          },
+          {
+            "@type": "Person",
+            "@id": "{{SITE_URL}}/#author",
+            "name": "Adrian Eyre",
+            "url": "https://github.com/adrianeyre"
+          }
+        ]
+      }
+    </script>
     <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="./styles.css" />
     <script type="module" src="./demos/main.tsx"></script>
