@@ -39,11 +39,18 @@ Pull-request builds skip signing when the secrets are missing. Releases fail wit
 
 ## The website
 
-The project website, [adrianeyre.github.io/agent-usage-widget](https://adrianeyre.github.io/agent-usage-widget/), is a static page in `site/` with product demos built in React on the vendored [Stageshow](https://github.com/benjitaylor/skills) kit (`site/stageshow/`).
+The project website, [agent-usage-widget.adrianeyre.co.uk](https://agent-usage-widget.adrianeyre.co.uk/), is a static page in `site/` with product demos built in React on the vendored [Stageshow](https://github.com/benjitaylor/skills) kit (`site/stageshow/`).
 
 - `pnpm site:build` assembles it in `site/dist/`, copying the screenshots in from `docs/images/` so they're never kept twice.
 - The **Pages** workflow builds it on `ubuntu-latest` and deploys it with `actions/deploy-pages`. Only the deploy job holds the Pages scopes.
-- In **Settings → Pages**, the source must be **GitHub Actions**.
+- In **Settings → Pages**, the source must be **GitHub Actions**, the custom domain `agent-usage-widget.adrianeyre.co.uk`, and **Enforce HTTPS** on. GitHub redirects `adrianeyre.github.io/agent-usage-widget/` there. `siteUrl` in `site/build.ts` must match the custom domain: it's the canonical address.
+
+### Search and link previews
+
+- The build writes `robots.txt`, `sitemap.xml` (the page and its images) and `site.webmanifest` into `site/dist/`, from `siteUrl`.
+- `site/index.html` carries the title, description, canonical link, Open Graph and X tags, and schema.org structured data (`WebSite`, `WebPage`, `SoftwareApplication`). The description is `siteDescription` in `site/build.ts`, shared by all of them.
+- The link-preview card, `site/social/card.png` (1200 × 630), and the PNG icons are committed. `scripts/social-images.sh` renders them on a Mac (`scripts/social-card.swift` draws the card around `docs/images/widgets-dark.png`); re-run it when the screenshots, the favicon or the card change.
+- To check a change: the [Rich Results Test](https://search.google.com/test/rich-results), the [Schema validator](https://validator.schema.org), and a link-preview debugger such as [opengraph.xyz](https://www.opengraph.xyz). Submit the sitemap once in [Google Search Console](https://search.google.com/search-console) and [Bing Webmaster Tools](https://www.bing.com/webmasters).
 
 ## Repo name
 
